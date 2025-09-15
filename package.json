@@ -1,12 +1,13 @@
 {
-  "name": "melancong-fe",
+  "name": "manud-fe",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 4000",
     "lint": "next lint",
+    "deploy": "git fetch origin && git reset --hard origin/main && npm ci && npm run build && (pm2 describe manud-fe >/dev/null && pm2 reload manud-fe --update-env || pm2 start npm --name manud-fe --cwd /root/manudaja/manud-fe --env production -- run start)",
     "prepare": "husky",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,md,mdx,css,yaml,yml}\"",
     "lint:fix": "eslint \"**/*.{ts,tsx,js,jsx}\" --fix",
