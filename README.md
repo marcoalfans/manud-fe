@@ -65,7 +65,7 @@ automatically optimize and load Inter, a custom Google Font.
 ## Usage
 
 <ul>
-<li>Home Page: Overview of Bali with featured destinations and activities.</li>
+<li>Home Page: Overview of Manud Ajawith featured destinations and activities.</li>
 <li>Dashboard Page: Browse and explore different tourist spots in Bali.</li>
 <li>Chatbot Page: Essential travel tips and safety information.</li>
 <li>Profile Page: Check profile.</li>

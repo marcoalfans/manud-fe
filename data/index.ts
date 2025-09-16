@@ -28,13 +28,13 @@ export const services = [
   {
     title: 'Dining Suggestions',
     description:
-      'Explore the culinary delights of Bali with our curated list of the best restaurants, cafes, and local eateries.',
+      'Explore the culinary delights of Manud Ajawith our curated list of the best restaurants, cafes, and local eateries.',
     link: '#'
   },
   {
     title: 'Travel Planning Tools',
     description:
-      'Utilize our suite of planning tools, including itineraries, maps, and budget calculators, to make your Bali trip seamless and enjoyable.',
+      'Utilize our suite of planning tools, including itineraries, maps, and budget calculators, to make your Manud Ajatrip seamless and enjoyable.',
     link: '#'
   },
   {

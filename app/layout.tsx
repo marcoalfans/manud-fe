@@ -22,11 +22,11 @@ export const metadata: Metadata = {
   },
   keywords: 'melancong, travel, recommendation, bali',
   description:
-    'Melancong is a website that showcases tourist destinations in Bali, provides travel recommendations around Bali with various features, and offers the best recommendations to aid in decision making',
+    'Melancong is a website that showcases tourist destinations in Bali, provides travel recommendations around Manud Ajawith various features, and offers the best recommendations to aid in decision making',
   openGraph: {
     title: 'Melancong - Tourism Recommendation in Bali',
     description:
-      'Melancong is a website that showcases tourist destinations in Bali, provides travel recommendations around Bali with various features, and offers the best recommendations to aid in decision making',
+      'Melancong is a website that showcases tourist destinations in Bali, provides travel recommendations around Manud Ajawith various features, and offers the best recommendations to aid in decision making',
     type: 'website',
     locale: 'en_US',
     url: `${process.env.BASE_APP_URL}/`,
