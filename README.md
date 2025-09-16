@@ -5,7 +5,7 @@
 
 Welcome to the Melancong Website! This project is a comprehensive web
 application built with Next.js, designed to showcase the beautiful destinations,
-activities, and culture of Bali, Indonesia. The website provides tourists with
+activities, and culture of Manud Jaya, Indonesia. The website provides tourists with
 valuable information and resources to plan their perfect trip to this tropical
 paradise.
 

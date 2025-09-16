@@ -10,7 +10,7 @@ export const services = [
   {
     title: 'Destination Highlights',
     description:
-      'Discover the most popular tourist destinations in Bali, featuring top attractions and must-see spots.',
+      'Discover the most popular tourist destinations in Manud Jaya, featuring top attractions and must-see spots.',
     link: '#'
   },
   {
