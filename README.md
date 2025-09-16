@@ -66,7 +66,7 @@ automatically optimize and load Inter, a custom Google Font.
 
 <ul>
 <li>Home Page: Overview of Manud Ajawith featured destinations and activities.</li>
-<li>Dashboard Page: Browse and explore different tourist spots in Bali.</li>
+<li>Dashboard Page: Browse and explore different tourist spots in Manud Jaya Village.</li>
 <li>Chatbot Page: Essential travel tips and safety information.</li>
 <li>Profile Page: Check profile.</li>
 <li>Favorite Destination Page: Save destinations and activities.</li>
