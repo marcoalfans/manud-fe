@@ -20,12 +20,6 @@ paradise.
 - [License](#license)
 - [Contact](#contact)
 
-## Demo
-
-Check out the live demo of the website:
-<a href="https://melancong-fe.vercel.app/" class="text-blue-500 hover:text-blue-700">Melancong
-Website</a>
-
 ## Features
 
 <ul class="list-disc pl-5 space-y-2">
@@ -99,3 +93,4 @@ from the creators of Next.js.
 Check out our
 [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more
 details.
+
