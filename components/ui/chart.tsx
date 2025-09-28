@@ -9,7 +9,8 @@ import { cn } from '@/lib/utils'
 const THEMES = { light: '', dark: '.dark' } as const
 
 export type ChartConfig = {
-  [k in string]: {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
+  [key in string]: {
     label?: React.ReactNode
     icon?: React.ComponentType
   } & (
@@ -70,7 +71,7 @@ ChartContainer.displayName = 'Chart'
 
 const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
   const colorConfig = Object.entries(config).filter(
-    ([, config]) => config.theme || config.color
+    ([, itemConfig]) => itemConfig.theme || itemConfig.color
   )
 
   if (!colorConfig.length) {
@@ -81,21 +82,20 @@ const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
     <style
       dangerouslySetInnerHTML={{
         __html: Object.entries(THEMES)
-          .map(
-            ([theme, prefix]) => `
-${prefix} [data-chart=${id}] {
-${colorConfig
-  .map(([key, itemConfig]) => {
-    const color =
-      itemConfig.theme?.[theme as keyof typeof itemConfig.theme] ||
-      itemConfig.color
-    return color ? `  --color-${key}: ${color};` : null
-  })
-  .join('')}
-}
-`
-          )
-          .join('')
+          .map(([theme, prefix]) => {
+            const colorVars = colorConfig
+              .map(([key, itemConfig]) => {
+                const color =
+                  itemConfig.theme?.[theme as keyof typeof itemConfig.theme] ||
+                  itemConfig.color
+                return color ? `  --color-${key}: ${color};` : null
+              })
+              .filter(Boolean)
+              .join('\n')
+
+            return `${prefix} [data-chart=${id}] {\n${colorVars}\n}`
+          })
+          .join('\n')
       }}
     />
   )
