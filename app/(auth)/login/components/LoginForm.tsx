@@ -13,6 +13,7 @@ import Swal from 'sweetalert2'
 import { useRouter } from 'next/navigation'
 import { IconEyeOff, IconEye } from '@tabler/icons-react'
 import GoogleLogo from '@/public/assets/icons/google-logo.svg'
+import Cookies from 'js-cookie'
 import Image from 'next/image'
 
 interface Props {}
@@ -38,7 +39,7 @@ const LoginForm: NextPage<Props> = () => {
               confirmButtonColor: '#00838F'
             }).then(result => {
               if (result.isConfirmed) {
-                router.push('/dashboard')
+                router.push('/admin/dashboard')
               }
             })
           } else {
@@ -66,7 +67,8 @@ const LoginForm: NextPage<Props> = () => {
 
       if (response.status === 200) {
         localStorage.setItem('token', data.data.token)
-        router.push('/dashboard')
+        Cookies.set('token', data.data.token, { path: '/', secure: true })
+        router.push('/admin/dashboard')
       } else {
         setError(data.message)
       }

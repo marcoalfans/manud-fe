@@ -141,7 +141,7 @@ export const FloatingNav = ({
         </ul>
 
         {/* Right button */}
-        <Link href={token ? '/dashboard' : '/login'}>
+        <Link href={token ? '/admin/dashboard' : '/login'}>
           <button className='relative rounded-full border border-neutral-200 px-4 py-1.5 text-sm font-medium text-black dark:border-white/20 dark:text-white'>
             <span>{token ? 'Dashboard' : 'Login'}</span>
             <span className='absolute inset-x-0 -bottom-px mx-auto h-px w-1/2 bg-gradient-to-r from-transparent via-blue-500 to-transparent' />
@@ -233,7 +233,7 @@ export const FloatingNav = ({
 //           </Link>
 //         ))}
 //         {token ? (
-//           <Link href='/dashboard'>
+//           <Link href='/admin/dashboard'>
 //             <button className='relative rounded-full border border-neutral-200 px-4 py-2 text-sm font-medium text-black dark:border-white/[0.2] dark:text-white'>
 //               <span>Dashboard</span>
 //               <span className='absolute inset-x-0 -bottom-px mx-auto h-px w-1/2 bg-gradient-to-r from-transparent via-blue-500 to-transparent' />
