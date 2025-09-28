@@ -17,9 +17,9 @@ const About: NextPage<Props> = () => {
             </h1>
             <p className='text-pretty pb-8 text-sm text-neutral-600 lg:pb-0'>
               Melancong is a website that showcases tourist destinations in
-              Manud Jaya, providing recommendations for traveling around Manud Ajawith
-              various features and offering the best recommendations to assist
-              in decision-making.
+              Manud Jaya, providing recommendations for traveling around Manud
+              Ajawith various features and offering the best recommendations to
+              assist in decision-making.
             </p>
             <div className='hidden md:block lg:hidden'>
               <ImageGrid />

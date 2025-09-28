@@ -10,7 +10,8 @@ interface Props {
 export const metadata: Metadata = {
   title: {
     template: '%s | Melancong - Tourism Recommendation in Manud Jaya Village',
-    default: 'Dashboard | Melancong - Tourism Recommendation in Manud Jaya Village'
+    default:
+      'Dashboard | Melancong - Tourism Recommendation in Manud Jaya Village'
   }
 }
 
