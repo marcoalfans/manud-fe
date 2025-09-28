@@ -14,23 +14,23 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Melancong - Tourism Recommendation in Manud Jaya Village',
-    template: '%s | Melancong - Tourism Recommendation in Manud Jaya Village'
+    default: 'ManudAja - Tourism Recommendation in Manud Jaya Village',
+    template: '%s | ManudAja - Tourism Recommendation in Manud Jaya Village'
   },
   verification: {
     google: '6HEAzcG2kIFk9z8FgN2ElCkjv59TMhG7D2cMc9So9nM'
   },
-  keywords: 'melancong, travel, recommendation, bali',
+  keywords: 'ManudAja, travel, recommendation, bali',
   description:
-    'Melancong is a website that showcases tourist destinations in Manud Jaya, provides travel recommendations around Manud Ajawith various features, and offers the best recommendations to aid in decision making',
+    'ManudAja is a website that showcases tourist destinations in Manud Jaya, provides travel recommendations around Manud Ajawith various features, and offers the best recommendations to aid in decision making',
   openGraph: {
-    title: 'Melancong - Tourism Recommendation in Manud Jaya Village',
+    title: 'ManudAja - Tourism Recommendation in Manud Jaya Village',
     description:
-      'Melancong is a website that showcases tourist destinations in Manud Jaya, provides travel recommendations around Manud Ajawith various features, and offers the best recommendations to aid in decision making',
+      'ManudAja is a website that showcases tourist destinations in Manud Jaya, provides travel recommendations around Manud Ajawith various features, and offers the best recommendations to aid in decision making',
     type: 'website',
     locale: 'en_US',
     url: `${process.env.BASE_APP_URL}/`,
-    siteName: 'Melancong',
+    siteName: 'ManudAja',
     images: [
       {
         url: `${process.env.BASE_APP_URL}/opengraph-image.png`

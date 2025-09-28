@@ -7,6 +7,7 @@ import HeroBanner from '@/app/(route)/landing/_partials/hero-banner/page'
 import Recommendation from '@/app/(route)/landing/_partials/recomendation/page'
 import OurService from '@/app/(route)/landing/_partials/our-services/page'
 import Footer from '@/components/ui/footer/Footer'
+import FloatingChatbot from '@/components/ui/navigation/FloatingChatbot'
 
 export const metadata: Metadata = {
   title: 'Portal Digital Desa Manud Jaya',
@@ -45,6 +46,7 @@ const LandingPage: NextPage = () => {
 
       {/* Footer */}
       <section>
+        <FloatingChatbot />
         <Footer />
       </section>
     </>
