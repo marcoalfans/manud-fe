@@ -104,7 +104,7 @@ export default function Navbar() {
           {/* Login / Dashboard (desktop) */}
           <li>
             <Link
-              href={token ? '/dashboard' : '/login'}
+              href={token ? '/admin/dashboard' : '/login'}
               className='ml-3 inline-block rounded-lg bg-white/90 px-4 py-2 text-sm font-semibold text-black hover:bg-white'
             >
               {token ? 'Dashboard' : 'Login'}
@@ -144,7 +144,7 @@ export default function Navbar() {
             {/* Login / Dashboard (mobile) */}
             <li>
               <Link
-                href={token ? '/dashboard' : '/login'}
+                href={token ? '/admin/dashboard' : '/login'}
                 className='block rounded-lg px-3 py-2 text-sm font-semibold text-white hover:bg-white/10'
                 onClick={() => setOpen(false)}
               >

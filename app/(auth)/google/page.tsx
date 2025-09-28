@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Loading from './loading'
+import Cookies from 'js-cookie'
 
 export default function AuthSuccess() {
   const router = useRouter()
@@ -14,7 +15,8 @@ export default function AuthSuccess() {
 
     if (token) {
       localStorage.setItem('token', token)
-      router.push('/dashboard')
+      Cookies.set('token', token, { path: '/', secure: true })
+      router.push('/admin/dashboard')
     } else {
       setLoading(false)
     }

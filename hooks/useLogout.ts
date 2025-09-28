@@ -1,6 +1,7 @@
 import api from '@/utils/api/axios'
 import Swal from 'sweetalert2'
 import { useRouter } from 'next/navigation'
+import Cookies from 'js-cookie'
 
 const useLogout = () => {
   const router = useRouter()
@@ -19,6 +20,7 @@ const useLogout = () => {
         try {
           await api.get('/auth/logout')
           localStorage.removeItem('token')
+          Cookies.remove('token')
           router.push('/landing')
         } catch (err) {
           Swal.fire({
