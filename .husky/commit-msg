@@ -1,4 +1,0 @@
-
-# npx --no-install commitlint --edit --config .commitlint.config.js "$1"
-npx commitlint --config commitlint.config.mjs --edit "$1"
-# exit 1

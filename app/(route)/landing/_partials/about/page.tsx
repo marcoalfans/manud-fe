@@ -36,19 +36,6 @@ const About: NextPage = () => {
           <div className='col-span-1 hidden px-8 lg:col-span-2 lg:block xl:col-span-2'>
             <ImageGrid />
           </div>
-          <div className='grid grid-cols-1 space-y-4 pt-4 md:grid-cols-3 md:pt-6 lg:grid-cols-1 xl:space-y-6'>
-            {AboutLists.map(item => (
-              <AboutList
-                key={item.id}
-                icon={item.icon}
-                title={item.title}
-                description={item.description}
-              />
-            ))}
-          </div>
-        </div>
-        <div className='col-span-1 hidden px-8 lg:col-span-2 lg:block xl:col-span-2'>
-          <ImageGrid />
         </div>
       </div>
     </section>
