@@ -41,8 +41,9 @@ const WisataListPage: NextPage = () => {
                 (window.location.href = `/destinations/${item.id}`)
               }
               onKeyPress={e => {
-                if (e.key === 'Enter')
+                if (e.key === 'Enter') {
                   window.location.href = `/destinations/${item.id}`
+                }
               }}
             />
           ))}

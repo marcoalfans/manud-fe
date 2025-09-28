@@ -19,7 +19,9 @@ const DestinasiUnggulan: NextPage = () => {
     event: React.KeyboardEvent<HTMLDivElement>,
     id: string
   ) => {
-    if (event.key === 'Enter') handleCardClick(id)
+    if (event.key === 'Enter') {
+      handleCardClick(id)
+    }
   }
 
   // Urutkan berdasarkan rating tertinggi, ambil beberapa teratas

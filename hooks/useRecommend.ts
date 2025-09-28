@@ -9,6 +9,8 @@ export interface Destination {
   regency: string
   imageLink: string
   information: string
+  whatsapp?: string
+  mapsLink?: string
 }
 
 const useRecommend = () => {

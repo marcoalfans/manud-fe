@@ -5,4 +5,6 @@ export interface DestinationDto {
   regency: string
   imageLink: string
   information: string
+  whatsapp?: string
+  mapsLink?: string
 }

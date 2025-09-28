@@ -110,39 +110,39 @@ export const recomendations = [
 //   }
 // ]
 
-// export const destinationLocations = [
-//   'Tabanan',
-//   'Badung',
-//   'Gianyar',
-//   'Denpasar',
-//   'Karangasem',
-//   'Buleleng',
-//   'Klungkung',
-//   'Bangli',
-//   'Jembrana'
-// ]
+export const destinationLocations = [
+  'Tabanan',
+  'Badung',
+  'Gianyar',
+  'Denpasar',
+  'Karangasem',
+  'Buleleng',
+  'Klungkung',
+  'Bangli',
+  'Jembrana'
+]
 
-// export const destinationTypes = [
-//   'Historical Landmark',
-//   'Beach',
-//   'Temple',
-//   'Wildlife',
-//   'Museum',
-//   'Garden',
-//   'Lake',
-//   'Waterfall',
-//   'Mountain',
-//   'Hot Spring',
-//   'Rice Field',
-//   'Culture',
-//   'Hill',
-//   'Countryside'
-// ]
+export const destinationTypes = [
+  'Historical Landmark',
+  'Beach',
+  'Temple',
+  'Wildlife',
+  'Museum',
+  'Garden',
+  'Lake',
+  'Waterfall',
+  'Mountain',
+  'Hot Spring',
+  'Rice Field',
+  'Culture',
+  'Hill',
+  'Countryside'
+]
 
-// export const inputSearchPlaceholders = [
-//   'Searching for destinations?',
-//   'Try to search for tanah lot..',
-//   'Not sure where to go?',
-//   'Try to search for the beach',
-//   'Not solved your issue? then try to ask for our chatbot'
-// ]
+export const inputSearchPlaceholders = [
+  'Searching for destinations?',
+  'Try to search for tanah lot..',
+  'Not sure where to go?',
+  'Try to search for the beach',
+  'Not solved your issue? then try to ask for our chatbot'
+]

@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation'
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
   const [openSub, setOpenSub] = useState<string | null>(null)
   const [token, setToken] = useState<string | null>(null)
   const pathname = usePathname()
@@ -16,7 +17,9 @@ export default function Navbar() {
   }, [])
 
   const normalizeHref = (href: string) => {
-    if (!href?.startsWith('#')) return href
+    if (!href?.startsWith('#')) {
+      return href
+    }
     return pathname === '/landing' ? href : `/landing${href}`
   }
 

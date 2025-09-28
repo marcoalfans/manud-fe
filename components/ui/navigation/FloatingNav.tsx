@@ -34,7 +34,9 @@ export const FloatingNav = ({
 
   // prefix anchor ke /landing jika sedang di halaman selain /landing
   const normalizeHref = (href: string) => {
-    if (!href?.startsWith('#')) return href
+    if (!href?.startsWith('#')) {
+      return href
+    }
     return pathname === '/landing' ? href : `/landing${href}`
   }
 
@@ -43,10 +45,15 @@ export const FloatingNav = ({
   }, [])
 
   useMotionValueEvent(scrollYProgress, 'change', current => {
-    if (typeof current !== 'number') return
+    if (typeof current !== 'number') {
+      return
+    }
     const direction = current - (scrollYProgress.getPrevious() ?? 0)
-    if (scrollYProgress.get() < 0.05) setVisible(false)
-    else setVisible(direction < 0) // scroll up -> show
+    if (scrollYProgress.get() < 0.05) {
+      setVisible(false)
+    } else {
+      setVisible(direction < 0)
+    } // scroll up -> show
   })
 
   return (
