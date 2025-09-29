@@ -3,14 +3,27 @@ import { useState, useEffect } from 'react'
 import api from '@/utils/api/axios'
 
 export interface Destination {
-  id: string
+  id: number
   name: string
-  rating: string
   regency: string
+  category: string
+  rating: number
+  location: string
+  childEntry: string
+  adultsEntry: string
   imageLink: string
   information: string
-  whatsapp?: string
-  mapsLink?: string
+  name_lower: string
+  regency_lower: string
+  category_lower: string
+  createdAt: {
+    _seconds: number
+    _nanoseconds: number
+  }
+  updatedAt: {
+    _seconds: number
+    _nanoseconds: number
+  }
 }
 
 const useRecommend = () => {

@@ -12,14 +12,15 @@ import Link from 'next/link'
 import Swal from 'sweetalert2'
 import { useRouter } from 'next/navigation'
 import { IconEyeOff, IconEye } from '@tabler/icons-react'
-import GoogleLogo from '@/public/assets/icons/google-logo.svg'
+// import GoogleLogo from '@/public/assets/icons/google-logo.svg'
 import Cookies from 'js-cookie'
-import Image from 'next/image'
+// import Image from 'next/image'
 
 interface Props {}
 
 const LoginForm: NextPage<Props> = () => {
   const [email, setEmail] = useState<string>('')
+  const [isLoading, setisLoading] = useState(false)
   const [password, setPassword] = useState<string>('')
   const [error, setError] = useState<string>('')
   const [showPassword, setShowPassword] = useState<boolean>(false)
@@ -56,7 +57,7 @@ const LoginForm: NextPage<Props> = () => {
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault()
     setError('')
-
+    setisLoading(true)
     try {
       const response = await api.post('/auth/login', {
         email,
@@ -79,12 +80,14 @@ const LoginForm: NextPage<Props> = () => {
       } else {
         setError('An unexpected error occurred')
       }
+    } finally {
+      setisLoading(false)
     }
   }
 
-  const handleGoogleLogin = () => {
-    router.push('https://melancong-be.vercel.app/auth/google')
-  }
+  // const handleGoogleLogin = () => {
+  //   router.push('https://melancong-be.vercel.app/auth/google')
+  // }
 
   return (
     <>
@@ -143,11 +146,11 @@ const LoginForm: NextPage<Props> = () => {
                   Forget Password
                 </Link>
               </div>
-              <SubmitButton btnText='Login Now' />
+              <SubmitButton btnText='Login Now' isLoading={isLoading} />
             </div>
           </form>
 
-          <div className='mt-4'>
+          {/* <div className='mt-4'>
             <button
               onClick={handleGoogleLogin}
               className='flex w-full items-center justify-center gap-2 rounded-full border border-neutral-500 bg-neutral-50 py-1.5 text-sm font-medium text-neutral-800 transition duration-300 hover:bg-neutral-200'
@@ -161,7 +164,7 @@ const LoginForm: NextPage<Props> = () => {
               />
               Login with Google
             </button>
-          </div>
+          </div> */}
 
           <div className='flex justify-center py-2 lg:py-4'>
             <span className='text-sm'>Don&apos;t have account?</span>

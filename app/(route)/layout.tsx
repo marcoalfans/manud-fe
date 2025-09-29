@@ -6,6 +6,7 @@ import Navbar from '@/components/ui/navigation/Navbar'
 import { FloatingNav } from '@/components/ui/navigation/FloatingNav'
 import { landingLinks } from '@/data/landing-link'
 import { useScroll, useMotionValueEvent } from 'framer-motion'
+import { Toaster } from '@/components/ui/toaster'
 
 export default function RouteLayout({
   children
@@ -24,6 +25,7 @@ export default function RouteLayout({
       {atTop && <Navbar />}
       <FloatingNav navItems={landingLinks} />
       {children}
+      <Toaster />
     </>
   )
 }

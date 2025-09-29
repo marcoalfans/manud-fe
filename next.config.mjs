@@ -29,6 +29,12 @@ const nextConfig = {
         hostname: 'melanc0ng.web.app',
         port: '',
         pathname: '/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'encrypted-tbn0.gstatic.com',
+        port: '',
+        pathname: '/images/**'
       }
     ]
   }

@@ -2,9 +2,11 @@ import api from '@/utils/api/axios'
 import Swal from 'sweetalert2'
 import { useRouter } from 'next/navigation'
 import Cookies from 'js-cookie'
+import { useState } from 'react'
 
 const useLogout = () => {
   const router = useRouter()
+  const [isLoading, setisLoading] = useState(false)
 
   const handleLogout = async () => {
     Swal.fire({
@@ -16,6 +18,7 @@ const useLogout = () => {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes'
     }).then(async result => {
+      setisLoading(true)
       if (result.isConfirmed) {
         try {
           await api.get('/auth/logout')
@@ -28,13 +31,16 @@ const useLogout = () => {
             text: 'Failed to log out',
             confirmButtonColor: '#00838F'
           })
+        } finally {
+          setisLoading(false)
         }
       }
     })
   }
 
   return {
-    handleLogout
+    handleLogout,
+    isLoading
   }
 }
 
