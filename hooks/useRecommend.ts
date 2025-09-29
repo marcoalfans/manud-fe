@@ -16,6 +16,8 @@ export interface Destination {
   name_lower: string
   regency_lower: string
   category_lower: string
+  whatsapp?: string
+  mapsLink?: string
   createdAt: {
     _seconds: number
     _nanoseconds: number

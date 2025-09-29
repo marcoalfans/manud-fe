@@ -68,10 +68,10 @@ const idrCurrency = z.string().regex(
 )
 
 // Kalau ingin mengekstrak angka murni dari string "Rp30,000" → 30000
-export const parseIDRToNumber = (v: string) =>
-  Number(v.replace(/[^\d]/g, '') || '0')
+// const parseIDRToNumber = (v: string) =>
+//   Number(v.replace(/[^\d]/g, '') || '0')
 
-export const schema = z.object({
+const schema = z.object({
   name: z.string().min(2, 'Name is required'),
   regency: z.string().min(2, 'Regency is required'),
   category: z.enum(categories), // asumsi 'categories' sudah kamu definisikan

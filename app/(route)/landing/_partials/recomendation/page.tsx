@@ -27,7 +27,7 @@ const DestinasiUnggulan: NextPage = () => {
   // Urutkan berdasarkan rating tertinggi, ambil beberapa teratas
   const topPicks = (destinations ?? [])
     .filter(d => d?.rating) // safeguard
-    .sort((a, b) => parseFloat(b.rating) - parseFloat(a.rating))
+    .sort((a, b) => b.rating - a.rating)
     .slice(0, 8) // tampilkan maksimal 8 item di landing
 
   return (
@@ -47,12 +47,12 @@ const DestinasiUnggulan: NextPage = () => {
               key={item.id}
               title={item.name}
               img={item.imageLink}
-              rating={parseFloat(item.rating)}
+              rating={item.rating}
               location={item.regency}
               description={`${(item.information ?? '').slice(0, 85)}...`}
               isSaveAvailable={false}
-              clickToDetail={() => handleCardClick(item.id)}
-              onKeyPress={e => handleKeyPress(e, item.id)}
+              clickToDetail={() => handleCardClick(item.id.toString())}
+              onKeyPress={e => handleKeyPress(e, item.id.toString())}
             />
           ))}
         </div>

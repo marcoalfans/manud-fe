@@ -9,7 +9,7 @@ const DestinationDetailPage: NextPage = () => {
   const router = useRouter()
   const { destinations } = useRecommend()
 
-  const data = (destinations ?? []).find(d => d.id === params.id)
+  const data = (destinations ?? []).find(d => d.id === Number(params.id))
 
   if (!data) {
     return (
@@ -49,7 +49,7 @@ const DestinationDetailPage: NextPage = () => {
         <div>
           <h1 className='text-3xl font-bold'>{data.name}</h1>
           <p className='text-muted-foreground mt-2 text-sm'>
-            {data.regency} • Rating {parseFloat(data.rating).toFixed(1)}
+            {data.regency} • Rating {data.rating.toFixed(1)}
           </p>
 
           <p className='mt-6 text-[15px] leading-relaxed'>{data.information}</p>
