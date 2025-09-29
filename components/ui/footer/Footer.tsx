@@ -12,7 +12,7 @@ const Footer: NextPage<Props> = () => {
             <span className='block text-center text-sm text-neutral-100'>
               © 2024{' '}
               <Link href='#' className='hover:underline'>
-                Melancong
+                manud jaya
               </Link>
               . All Rights Reserved. - Images by{' '}
               <a href='https://www.pexels.com/'>pexels</a> and{' '}

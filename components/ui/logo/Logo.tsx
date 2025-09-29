@@ -17,7 +17,7 @@ export default function Logo({
     <div className='flex items-center'>
       <Image
         src={imgLogo}
-        alt='melancong logo'
+        alt='manud jaya logo'
         width={width}
         height={height}
         className={className ?? 'aspect-square'}

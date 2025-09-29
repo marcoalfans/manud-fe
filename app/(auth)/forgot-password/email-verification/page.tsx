@@ -4,7 +4,7 @@ import EmailVerificationForm from '@/app/(auth)/forgot-password/email-verificati
 
 export const metadata: Metadata = {
   title: 'Email Confirmation',
-  description: 'Melancong - Email Confirmation'
+  description: 'manud jaya - Email Confirmation'
 }
 
 const EmailConfirmation = () => {

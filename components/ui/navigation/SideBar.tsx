@@ -101,7 +101,7 @@ const SideBar: NextPage<Props> = ({
             </button>
           </div>
           <div className='mt-6 flex justify-center'>
-            <Image src='/logo.png' alt='Melancong' className='w-32' />
+            <Image src='/logo.png' alt='manud jaya' className='w-32' />
           </div>
         </div>
       </div>

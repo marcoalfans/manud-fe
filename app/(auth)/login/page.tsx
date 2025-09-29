@@ -4,7 +4,7 @@ import LoginForm from '@/app/(auth)/login/components/LoginForm'
 
 export const metadata: Metadata = {
   title: 'Login',
-  description: 'Melancong - Login'
+  description: 'manud jaya - Login'
 }
 
 const LoginPage = () => {

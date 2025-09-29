@@ -4,7 +4,7 @@ import PasswordConfirmForm from '@/app/(auth)/forgot-password/_password-confirma
 
 export const metadata: Metadata = {
   title: 'Password Confirmation',
-  description: 'Melancong - Password Confirmation'
+  description: 'manud jaya - Password Confirmation'
 }
 
 const PasswordConfirmation = () => {
