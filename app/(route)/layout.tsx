@@ -6,7 +6,7 @@ import Navbar from '@/components/ui/navigation/Navbar'
 import { FloatingNav } from '@/components/ui/navigation/FloatingNav'
 import { landingLinks } from '@/data/landing-link'
 import { useScroll, useMotionValueEvent } from 'framer-motion'
-import { Toaster } from '@/components/ui/toaster'
+import { Toaster } from '@/components/ui/sonner'
 
 export default function RouteLayout({
   children
