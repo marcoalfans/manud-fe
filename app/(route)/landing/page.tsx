@@ -12,7 +12,7 @@ import FloatingChatbot from '@/components/ui/navigation/FloatingChatbot'
 export const metadata: Metadata = {
   title: 'Portal Digital Desa Manud Jaya',
   description:
-    'Landing page resmi: profil/visi, potensi (UMKM, pertanian, wisata), dan informasi awal portal.'
+    'Landing page resmi: profil/visi, potensi (UMKM, wisata), dan informasi awal portal.'
 }
 
 const LandingPage: NextPage = () => {

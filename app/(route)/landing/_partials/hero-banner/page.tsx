@@ -8,7 +8,7 @@ import { ImagesSlider } from '@/components/ui/hero/ImageSlider'
 import { FlipWords } from '@/components/ui/text/FlipWord'
 import { heroImageSliderImages } from '@/data/index'
 
-const HERO_WORDS = ['UMKM', 'Pertanian', 'Wisata']
+const HERO_WORDS = ['UMKM', 'Wisata']
 
 const HeroBanner: NextPage = () => {
   return (

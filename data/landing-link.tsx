@@ -4,8 +4,7 @@ import {
   IconInfoCircle,
   IconSparkles,
   IconMapPin,
-  IconShoppingBag,
-  IconPlant2
+  IconShoppingBag
 } from '@tabler/icons-react'
 
 export const landingLinks = [
@@ -17,7 +16,6 @@ export const landingLinks = [
     icon: <IconSparkles />,
     sub: [
       { name: 'UMKM', link: '/umkm', icon: <IconShoppingBag /> }, // ← diarahkan ke page UMKM
-      { name: 'Pertanian', link: '#potensi-pertanian', icon: <IconPlant2 /> },
       { name: 'Wisata', link: '/wisata', icon: <IconMapPin /> } // ke modul /wisata
     ]
   }

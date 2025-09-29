@@ -25,12 +25,6 @@ export const potensi = [
     link: '#'
   },
   {
-    title: 'Pertanian',
-    description:
-      'Komoditas unggulan desa sebagai penopang ekonomi warga dan komunitas.',
-    link: '#'
-  },
-  {
     title: 'Wisata',
     description:
       'Destinasi alam & budaya; rencana booking via WhatsApp pada modul Wisata.',

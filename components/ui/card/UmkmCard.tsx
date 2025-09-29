@@ -1,9 +1,9 @@
 'use client'
 
 import Link from 'next/link'
-import { Umkm } from '@/data/umkm'
+import { Umkms } from '@/hooks/umkm/useFetchUmkm'
 
-export default function UmkmCard({ item }: { item: Umkm }) {
+export default function UmkmCard({ item }: { item: Umkms }) {
   return (
     <article className='group w-full overflow-hidden rounded-2xl border bg-white shadow-sm transition hover:shadow-md'>
       {/* eslint-disable-next-line @next/next/no-img-element */}

@@ -2,10 +2,12 @@
 
 import { useMemo, useState } from 'react'
 import UmkmCard from '@/components/ui/card/UmkmCard'
-import { umkmData } from '@/data/umkm'
 import Link from 'next/link'
+import useGetUmkms from '@/hooks/umkm/useFetchUmkm'
 
 export default function UmkmListPage() {
+  const { umkms, loading } = useGetUmkms()
+
   const [q, setQ] = useState('')
   const [cat, setCat] = useState<
     'Semua' | 'Kuliner' | 'Kerajinan' | 'Pertanian' | 'Lainnya'
@@ -13,14 +15,18 @@ export default function UmkmListPage() {
 
   const data = useMemo(() => {
     const text = q.toLowerCase()
-    return umkmData.filter(i => {
+    return umkms.filter(i => {
       const passCat = cat === 'Semua' || i.category === cat
       const passText =
         i.name.toLowerCase().includes(text) ||
         i.description.toLowerCase().includes(text)
       return passCat && passText
     })
-  }, [q, cat])
+  }, [q, umkms, cat])
+
+  if (loading) {
+    return <>...</>
+  }
 
   return (
     <main className='container pt-20'>
@@ -56,14 +62,12 @@ export default function UmkmListPage() {
           <option>Semua</option>
           <option>Kuliner</option>
           <option>Kerajinan</option>
-          <option>Pertanian</option>
-          <option>Lainnya</option>
         </select>
       </div>
 
       {/* Grid */}
       <div className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
-        {data.map(item => (
+        {data?.map(item => (
           <UmkmCard key={item.id} item={item} />
         ))}
       </div>

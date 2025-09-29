@@ -9,11 +9,6 @@ const potensi = [
     link: '#'
   },
   {
-    title: 'Pertanian',
-    description: 'Komoditas unggulan desa, jadi penopang ekonomi warga.',
-    link: '#'
-  },
-  {
     title: 'Wisata',
     description: 'Destinasi wisata alam & budaya, dengan booking via WhatsApp.',
     link: '#'
