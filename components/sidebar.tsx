@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils'
 import { LayoutDashboard, Mountain, Store } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import useLogout from '@/hooks/useLogout'
+import { Spinner } from '@nextui-org/react'
 
 const navItems = [
   { href: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -15,7 +16,7 @@ const navItems = [
 
 export default function Sidebar() {
   const pathname = usePathname()
-  const { handleLogout } = useLogout()
+  const { handleLogout, isLoading } = useLogout()
 
   return (
     <aside className='bg-sidebar hidden w-64 shrink-0 border-r md:flex'>
@@ -51,11 +52,12 @@ export default function Sidebar() {
 
         <div>
           <Button
+            disabled={isLoading}
             variant='destructive'
             className='mb-10 w-full'
             onClick={handleLogout}
           >
-            Logout
+            {isLoading ? <Spinner size='sm' /> : 'Logout'}
           </Button>
           <div className='text-muted-foreground mt-auto px-2 text-xs'>
             <p>© {new Date().getFullYear()} Simple CMS</p>
