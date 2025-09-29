@@ -10,7 +10,10 @@ const WisataListPage: NextPage = () => {
 
   const sorted = (destinations ?? [])
     .filter(d => d?.name && d?.imageLink)
-    .sort((a, b) => parseFloat(b.rating) - parseFloat(a.rating))
+    .sort(
+      (a, b) =>
+        parseFloat(b.rating.toString()) - parseFloat(a.rating.toString())
+    )
 
   return (
     <main className='container pt-20'>
@@ -33,7 +36,7 @@ const WisataListPage: NextPage = () => {
               key={item.id}
               title={item.name}
               img={item.imageLink}
-              rating={parseFloat(item.rating)}
+              rating={parseFloat(item.rating.toString())}
               location={item.regency}
               description={`${(item.information ?? '').slice(0, 85)}...`}
               isSaveAvailable={false}

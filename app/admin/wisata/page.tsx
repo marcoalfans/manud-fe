@@ -27,13 +27,6 @@ import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
 import { Label } from '@/components/ui/label'
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from '@/components/ui/select'
-import {
   Table,
   TableBody,
   TableCell,
@@ -43,18 +36,22 @@ import {
 } from '@/components/ui/table'
 import { Plus, Trash2, ImageIcon, Search } from 'lucide-react'
 import { z } from 'zod'
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-
-type WisataItem = {
-  id: string
-  name: string
-  category: string
-  location: string
-  photoUrl: string
-  createdAt: string
-}
+import useRecommend, { Destination } from '@/hooks/useRecommend'
+import CreatedAtDisplay from '@/utils/firestoreTimestampToDate'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from '@/components/ui/select'
+import { Textarea } from '@/components/ui/textarea'
+import usePostDestination from '@/hooks/destinations/usePostDestination'
+import { toast } from '@/hooks/use-toast'
+import useDeleteDestinationById from '@/hooks/destinations/useDeleteDestinationById'
 
 const categories = [
   'Pantai',
@@ -64,54 +61,26 @@ const categories = [
   'Danau'
 ] as const
 
-const initialData: WisataItem[] = [
-  {
-    id: 'w1',
-    name: 'Pantai Putih',
-    category: 'Pantai',
-    location: 'Kawasan Selatan',
-    photoUrl: '/pantai-putih.jpg',
-    createdAt: new Date().toISOString()
-  },
-  {
-    id: 'w2',
-    name: 'Gunung Sejuk',
-    category: 'Gunung',
-    location: 'Pegunungan Timur',
-    photoUrl: '/gunung-sejuk.jpg',
-    createdAt: new Date(Date.now() - 86400000 * 8).toISOString()
-  },
-  {
-    id: 'w3',
-    name: 'Air Terjun Indah',
-    category: 'Air Terjun',
-    location: 'Hutan Utara',
-    photoUrl: '/air-terjun-indah.jpg',
-    createdAt: new Date(Date.now() - 86400000 * 16).toISOString()
-  },
-  {
-    id: 'w4',
-    name: 'Kampung Adat',
-    category: 'Budaya',
-    location: 'Kota Tua',
-    photoUrl: '/kampung-adat.jpg',
-    createdAt: new Date(Date.now() - 86400000 * 21).toISOString()
-  },
-  {
-    id: 'w5',
-    name: 'Danau Biru',
-    category: 'Danau',
-    location: 'Dataran Tinggi',
-    photoUrl: '/danau-biru.jpg',
-    createdAt: new Date(Date.now() - 86400000 * 30).toISOString()
-  }
-]
+const idrCurrency = z.string().regex(
+  /^Rp\s?\d{1,3}(?:[.,]\d{3})*(?:,\d+)?$/,
+  // eslint-disable-next-line quotes
+  "Gunakan format Rupiah, mis. 'Rp30.000' atau 'Rp30,000'"
+)
 
-const schema = z.object({
+// Kalau ingin mengekstrak angka murni dari string "Rp30,000" → 30000
+export const parseIDRToNumber = (v: string) =>
+  Number(v.replace(/[^\d]/g, '') || '0')
+
+export const schema = z.object({
   name: z.string().min(2, 'Name is required'),
-  category: z.enum(categories),
-  location: z.string().min(2, 'Location is required'),
-  photoUrl: z.string().url('Must be a valid URL').optional().or(z.literal(''))
+  regency: z.string().min(2, 'Regency is required'),
+  category: z.enum(categories), // asumsi 'categories' sudah kamu definisikan
+  rating: z.coerce.number().min(0, 'Min 0').max(5, 'Max 5'),
+  location: z.string(),
+  childEntry: idrCurrency,
+  adultsEntry: idrCurrency,
+  imageLink: z.string(),
+  information: z.string().min(10, 'Information is required')
 })
 
 type FormValues = z.infer<typeof schema>
@@ -120,9 +89,8 @@ type SortKey = 'name' | 'createdAt'
 type SortDir = 'asc' | 'desc'
 
 function usePagedSortedFiltered(
-  items: WisataItem[],
+  items: Destination[],
   q: string,
-  cat: string,
   sortKey: SortKey,
   sortDir: SortDir,
   page: number,
@@ -130,17 +98,17 @@ function usePagedSortedFiltered(
 ) {
   const filtered = items.filter(i => {
     const matchesQ = i.name.toLowerCase().includes(q.toLowerCase())
-    const matchesCat = cat === 'All' || i.category === cat
-    return matchesQ && matchesCat
+    // const matchesCat = cat === 'All' || i.rating === cat
+    return matchesQ
   })
   const sorted = [...filtered].sort((a, b) => {
     let v = 0
     if (sortKey === 'name') {
       v = a.name.localeCompare(b.name)
     }
-    if (sortKey === 'createdAt') {
-      v = new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-    }
+    // if (sortKey === 'createdAt') {
+    //   v = new Date(a.).getTime() - new Date(b.createdAt).getTime()
+    // }
 
     return sortDir === 'asc' ? v : -v
   })
@@ -151,18 +119,19 @@ function usePagedSortedFiltered(
 }
 
 export default function WisataPage() {
-  const [items, setItems] = useState<WisataItem[]>(initialData)
+  const { destinations, fetchRecommendation } = useRecommend()
+  const { fetchPostDestination } = usePostDestination()
+  const { fetchDeleteDestinationById } = useDeleteDestinationById()
+
   const [searchQ, setSearchQ] = useState('')
-  const [category, setCategory] = useState<string>('All')
   const [sortKey, setSortKey] = useState<SortKey>('createdAt')
   const [sortDir, setSortDir] = useState<SortDir>('desc')
   const [page, setPage] = useState(0)
   const pageSize = 5
 
   const { pageItems, total } = usePagedSortedFiltered(
-    items,
+    destinations,
     searchQ,
-    category,
     sortKey,
     sortDir,
     page,
@@ -180,27 +149,33 @@ export default function WisataPage() {
     }
   }
 
-  function addItem(values: FormValues) {
-    const id = `w_${Date.now().toString(36)}_${Math.round(Math.random() * 1e4)}`
-    setItems(prev => [
-      {
-        id,
-        name: values.name,
-        category: values.category,
-        location: values.location,
-        photoUrl:
-          values.photoUrl && values.photoUrl.length > 0
-            ? values.photoUrl
-            : '/wisata-photo.jpg',
-        createdAt: new Date().toISOString()
-      },
-      ...prev
-    ])
-    setPage(0)
+  async function addItem(values: FormValues) {
+    try {
+      await fetchPostDestination(values)
+      await fetchRecommendation()
+      toast({
+        description: 'Berhasil menambahkan destinasi!'
+      })
+      setPage(0)
+    } catch (error) {
+      toast({
+        description: 'error Add Destination!'
+      })
+    }
   }
 
-  function deleteItem(id: string) {
-    setItems(prev => prev.filter(i => i.id !== id))
+  async function deleteItem(id: number) {
+    try {
+      await fetchDeleteDestinationById(id)
+      await fetchRecommendation()
+      toast({
+        description: 'Berhasil menghapus destinasi!'
+      })
+    } catch (error) {
+      toast({
+        description: 'error Delete Destination!'
+      })
+    }
   }
 
   return (
@@ -234,25 +209,6 @@ export default function WisataPage() {
                   className='pl-8'
                 />
               </div>
-              <Select
-                value={category}
-                onValueChange={v => {
-                  setCategory(v)
-                  setPage(0)
-                }}
-              >
-                <SelectTrigger className='w-44'>
-                  <SelectValue placeholder='Category' />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value='All'>All Categories</SelectItem>
-                  {categories.map(c => (
-                    <SelectItem key={c} value={c}>
-                      {c}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
             </div>
             <div className='text-muted-foreground text-sm'>
               {total} total items • Page {page + 1} / {pages}
@@ -271,18 +227,17 @@ export default function WisataPage() {
                     Name{' '}
                     {sortKey === 'name' ? (sortDir === 'asc' ? '▲' : '▼') : ''}
                   </TableHead>
-                  <TableHead>Category</TableHead>
+                  <TableHead>Rating</TableHead>
                   <TableHead>Location</TableHead>
                   <TableHead
-                    className='cursor-pointer select-none'
-                    onClick={() => toggleSort('createdAt')}
+                  // onClick={() => toggleSort('createdAt')}
                   >
-                    Created{' '}
-                    {sortKey === 'createdAt'
+                    Created
+                    {/* {sortKey === 'createdAt'
                       ? sortDir === 'asc'
                         ? '▲'
                         : '▼'
-                      : ''}
+                      : ''} */}
                   </TableHead>
                   <TableHead className='text-right'>Actions</TableHead>
                 </TableRow>
@@ -291,17 +246,19 @@ export default function WisataPage() {
                 {pageItems.map(it => (
                   <TableRow key={it.id}>
                     <TableCell>
-                      <ImageDialog thumbSrc={it.photoUrl} alt={it.name} />
+                      <ImageDialog thumbSrc={it.imageLink} alt={it.name} />
                     </TableCell>
                     <TableCell className='font-medium'>{it.name}</TableCell>
                     <TableCell>
-                      <Badge variant='secondary'>{it.category}</Badge>
+                      <Badge variant='secondary'>{it.rating}</Badge>
                     </TableCell>
                     <TableCell className='text-muted-foreground'>
-                      {it.location}
+                      <a href={it.location} target='_blank' rel='noreferrer'>
+                        {it.regency}
+                      </a>
                     </TableCell>
                     <TableCell className='text-muted-foreground'>
-                      {new Date(it.createdAt).toLocaleDateString()}
+                      {CreatedAtDisplay(it.createdAt)}
                     </TableCell>
                     <TableCell className='text-right'>
                       <DeleteButton onConfirm={() => deleteItem(it.id)} />
@@ -352,17 +309,24 @@ export default function WisataPage() {
 function AddDialog({ onAdd }: { onAdd: (v: FormValues) => void }) {
   const [open, setOpen] = useState(false)
   const {
+    control,
     register,
     handleSubmit,
     reset,
-    formState: { errors, isSubmitting }
+    formState: { errors }
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
+    mode: 'onSubmit',
     defaultValues: {
       name: '',
+      regency: '',
       category: categories[0],
+      rating: 0,
       location: '',
-      photoUrl: ''
+      childEntry: 'Rp0',
+      adultsEntry: 'Rp0',
+      imageLink: '',
+      information: ''
     }
   })
 
@@ -387,53 +351,88 @@ function AddDialog({ onAdd }: { onAdd: (v: FormValues) => void }) {
           </DialogDescription>
         </DialogHeader>
         <form className='grid gap-4' onSubmit={handleSubmit(submit)}>
+          {/* Name */}
           <div className='grid gap-2'>
             <Label htmlFor='name'>Name</Label>
             <Input
               id='name'
+              placeholder='e.g., Tanah Lot'
               {...register('name')}
-              placeholder='e.g., Pantai Indah'
             />
             {errors.name && (
               <p className='text-destructive text-sm'>{errors.name.message}</p>
             )}
           </div>
+
+          {/* Regency */}
           <div className='grid gap-2'>
-            <Label>Category</Label>
-            <Select
-              defaultValue={categories[0]}
-              onValueChange={v => {
-                // sync into RHF manually
-                const evt = {
-                  target: { name: 'category', value: v }
-                } as unknown as React.ChangeEvent<HTMLInputElement>
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                ;(register('category').onChange as any)(evt)
-              }}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder='Select category' />
-              </SelectTrigger>
-              <SelectContent>
-                {categories.map(c => (
-                  <SelectItem key={c} value={c}>
-                    {c}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <Label htmlFor='regency'>Regency</Label>
+            <Input
+              id='regency'
+              placeholder='e.g., Tabanan'
+              {...register('regency')}
+            />
+            {errors.regency && (
+              <p className='text-destructive text-sm'>
+                {errors.regency.message}
+              </p>
+            )}
+          </div>
+
+          {/* Category (Controller karena komponen non-native) */}
+          <div className='grid gap-2'>
+            <Label htmlFor='category'>Category</Label>
+            <Controller
+              control={control}
+              name='category'
+              render={({ field }) => (
+                <Select value={field.value} onValueChange={field.onChange}>
+                  <SelectTrigger id='category'>
+                    <SelectValue placeholder='Pilih kategori' />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {categories.map(c => (
+                      <SelectItem key={c} value={c}>
+                        {c}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+            />
             {errors.category && (
               <p className='text-destructive text-sm'>
                 {errors.category.message}
               </p>
             )}
           </div>
+
+          {/* Rating */}
           <div className='grid gap-2'>
-            <Label htmlFor='location'>Location</Label>
+            <Label htmlFor='rating'>Rating</Label>
+            <Input
+              id='rating'
+              type='number'
+              step='0.1'
+              min={0}
+              max={5}
+              placeholder='e.g., 4.6'
+              {...register('rating', { valueAsNumber: true })}
+            />
+            {errors.rating && (
+              <p className='text-destructive text-sm'>
+                {errors.rating.message}
+              </p>
+            )}
+          </div>
+
+          {/* Location */}
+          <div className='grid gap-2'>
+            <Label htmlFor='location'>Location (Maps URL)</Label>
             <Input
               id='location'
+              placeholder='https://maps.google.com/...'
               {...register('location')}
-              placeholder='e.g., Kawasan Selatan'
             />
             {errors.location && (
               <p className='text-destructive text-sm'>
@@ -441,19 +440,68 @@ function AddDialog({ onAdd }: { onAdd: (v: FormValues) => void }) {
               </p>
             )}
           </div>
+
+          {/* Child Entry */}
           <div className='grid gap-2'>
-            <Label htmlFor='photoUrl'>Photo URL</Label>
+            <Label htmlFor='childEntry'>Child Entry (Rp)</Label>
             <Input
-              id='photoUrl'
-              {...register('photoUrl')}
-              placeholder='https://example.com/photo.jpg'
+              id='childEntry'
+              placeholder='Rp30.000 atau Rp30,000'
+              {...register('childEntry')}
             />
-            {errors.photoUrl && (
+            {errors.childEntry && (
               <p className='text-destructive text-sm'>
-                {errors.photoUrl.message}
+                {errors.childEntry.message}
               </p>
             )}
           </div>
+
+          {/* Adults Entry */}
+          <div className='grid gap-2'>
+            <Label htmlFor='adultsEntry'>Adults Entry (Rp)</Label>
+            <Input
+              id='adultsEntry'
+              placeholder='Rp60.000 atau Rp60,000'
+              {...register('adultsEntry')}
+            />
+            {errors.adultsEntry && (
+              <p className='text-destructive text-sm'>
+                {errors.adultsEntry.message}
+              </p>
+            )}
+          </div>
+
+          {/* Image Link */}
+          <div className='grid gap-2'>
+            <Label htmlFor='imageLink'>Photo URL</Label>
+            <Input
+              id='imageLink'
+              placeholder='https://example.com/photo.jpg'
+              {...register('imageLink')}
+            />
+            {errors.imageLink && (
+              <p className='text-destructive text-sm'>
+                {errors.imageLink.message}
+              </p>
+            )}
+          </div>
+
+          {/* Information */}
+          <div className='grid gap-2'>
+            <Label htmlFor='information'>Information</Label>
+            <Textarea
+              id='information'
+              rows={6}
+              placeholder='Deskripsi tempat (min. 10 karakter)…'
+              {...register('information')}
+            />
+            {errors.information && (
+              <p className='text-destructive text-sm'>
+                {errors.information.message}
+              </p>
+            )}
+          </div>
+
           <DialogFooter>
             <Button
               type='button'
@@ -462,9 +510,7 @@ function AddDialog({ onAdd }: { onAdd: (v: FormValues) => void }) {
             >
               Cancel
             </Button>
-            <Button type='submit' disabled={isSubmitting}>
-              Save
-            </Button>
+            <Button type='submit'>Save</Button>
           </DialogFooter>
         </form>
       </DialogContent>

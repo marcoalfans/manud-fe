@@ -3,9 +3,8 @@ import type { Metadata } from 'next'
 import Sidebar from '@/components/sidebar'
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
-  generator: 'v0.app'
+  title: 'CMS',
+  description: 'Manud Jaya CMS'
 }
 
 export default function RootLayout({
