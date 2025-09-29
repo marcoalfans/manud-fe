@@ -42,8 +42,8 @@ export default function FloatingChatbot({ className }: { className?: string }) {
         aria-label={open ? 'Tutup chatbot' : 'Buka chatbot'}
         onClick={() => setOpen(!open)}
         className={cn(
-          'fixed bottom-5 right-5 z-[5000] flex h-14 w-14 items-center justify-center rounded-full',
-          'bg-primary text-primary-foreground shadow-lg transition-all',
+          'fixed bottom-5 right-5 z-[5000] flex h-14 w-14 items-center justify-center rounded-full bg-cyan-800',
+          'text-primary-foreground shadow-xl transition-all',
           'hover:shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
           'md:bottom-6 md:right-6',
           className

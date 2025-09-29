@@ -67,7 +67,7 @@ const DestinasiUnggulan: NextPage = () => {
       <div className='mt-10 text-center'>
         <Link
           href='/wisata'
-          className='inline-block rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground hover:opacity-90'
+          className='inline-block rounded-xl bg-cyan-800 px-5 py-3 text-sm font-semibold text-primary-foreground hover:opacity-90'
         >
           Lihat Semua Destinasi
         </Link>
